@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\seeders\pokemonSeeder; // N'oubliez pas d'importer le seeder PokemonSeeder
 
 class DatabaseSeeder extends Seeder
 {
