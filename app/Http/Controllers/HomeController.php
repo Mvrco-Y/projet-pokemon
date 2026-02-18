@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //retourne notre vue welcome.blade
         return view('home');
     }
 }

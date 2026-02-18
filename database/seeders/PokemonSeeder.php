@@ -17,13 +17,15 @@ class PokemonSeeder extends Seeder
         $jsonString = file_get_contents($lien);
         $datas = json_decode($jsonString, true);
 
-    foreach ($datas as $key => $data) {
-        
+        foreach ($datas as $key => $data) {
+
             // Génération du nom d'image
-        $imgName = strtolower($data['name']);
-        $imgName = str_replace([' ', '.', '\'', '’'], '-', $imgName);
-        $imgName .= '.png';
-        $p = ['pokedex_number' => $data['pokedex_number'],
+            $imgName = strtolower($data['name']);
+            $imgName = str_replace([' ', '.', '\'', '’'], '-', $imgName);
+            $imgName .= '.png';
+
+            Pokemon::firstOrCreate(
+                [   'pokedex_number' => $data['pokedex_number'],
                     'name' => $data['name'],
                     'type1' => $data['type1'],
                     'type2' => $data['type2'] !== "" ? $data['type2'] : null,
@@ -36,12 +38,9 @@ class PokemonSeeder extends Seeder
                     'generation' => $data['generation'],
                     'is_legendary' => $data['is_legendary'] == 1,
                     'image_path' => 'assets/images/pokemon/' . $imgName
-                ];
-            
-            $pok = Pokemon::firstOrCreate(
-                $p
+                ]
             );
-         }
+        }
     }
 
 }

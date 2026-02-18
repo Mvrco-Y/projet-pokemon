@@ -6,6 +6,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Toutes les routes pour la gestion de l'authentification
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route pour retourner notre vue qui vas afficher tous nos pokemons
+
+
