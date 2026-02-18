@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 
 class PokemonController extends Controller
 {
-    //on retourne notre vue pokemons
-    public function lstPokemon(){
-
-        return view('pokemons');
+    //Fonction qui retournera notre vue pokemon(liste de tous les pokemons)
+    public function index(){
+        return view('homepokemon');
     }
 }
