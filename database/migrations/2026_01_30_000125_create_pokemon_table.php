@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->unsignedInteger('pokedex_number')->unique();
 
-            // Types (filtrage)
+            // Types
             $table->string('type1');
             $table->string('type2')->nullable();
 
@@ -35,11 +35,12 @@ return new class extends Migration
             $table->unsignedTinyInteger('generation');
             $table->boolean('is_legendary')->default(false);
 
-            // Affichage
-            $table->string('image_path')->nullable(); // Chemin vers l'image du Pokémon qui sera inséré depuis notre seeder
+            // Image
+            $table->string('image_path')->nullable();
 
             $table->timestamps();
         });
+
     }
 
     /**
