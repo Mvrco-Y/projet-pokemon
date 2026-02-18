@@ -1,6 +1,4 @@
-@extends('homepokemon')
 
-@section('content')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -36,6 +34,9 @@
                 </nav>
             @endif
         </header>
+        <main>
+            @yield('content')
+        </main>
     </body>
 </html>
-@endsection
+
