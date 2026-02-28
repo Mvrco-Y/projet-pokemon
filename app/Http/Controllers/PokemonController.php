@@ -21,5 +21,26 @@ class PokemonController extends Controller
         ]);
     }
 
+    
+    public function show(Request $request)
+    {
+        $perPage = 40; // fixe : toujours 40 par page
+
+        $pokemons = Pokemon::orderBy('pokedex_number')
+            ->paginate($perPage)
+            ->withQueryString(); // garde les paramètres éventuels dans l'URL
+
+        return view('home', [
+            'pokemons' => $pokemons,
+        ]);
+    }
+
+
+
+    public function detail($id)
+    {
+        return view('pokemon.detail', ['id' => $id]);
+    }
+
 
 }

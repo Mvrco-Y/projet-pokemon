@@ -26,7 +26,7 @@
                             </section>
 
                             <section class='listpokemon'>
-                                @include('pokemon.show')
+                               @include('pokemon.show')
                             </section>
                             
                         </main>
