@@ -35,6 +35,35 @@ class PokemonController extends Controller
         ]);
     }
 
+    
+    public function search(Request $request)
+    {
+        // 1) Valider l’entrée
+        $data = $request->validate([
+            'q' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $q = trim($data['q'] ?? '');
+
+        // 2) Construire la requête
+        $query = Pokemon::query();
+
+        if ($q !== '') {
+            // Recherche insensible à la casse selon la BDD (LIKE basique)
+            $query->where('name', 'LIKE', '%' . $q . '%');
+        }
+
+        // 3) Pagination fixe à 40 par page (même règle que show)
+        $pokemons = $query->orderBy('pokedex_number')
+            ->paginate(40)
+            ->withQueryString(); // garde ?q=... pendant la pagination
+
+        // 4) Retourner la home qui inclura 'pokemon.show'
+        return view('home', [
+            'pokemons' => $pokemons,
+            'q' => $q, // utile si tu veux réafficher la valeur dans le champ
+        ]);
+    }
 
 
     public function detail($id)
