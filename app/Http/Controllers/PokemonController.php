@@ -22,53 +22,121 @@ class PokemonController extends Controller
     }
 
     
-    public function show(Request $request)
+   private function getTypes()
     {
-        $perPage = 40; // fixe : toujours 40 par page
+        $type1 = Pokemon::select('type1')
+            ->whereNotNull('type1')
+            ->distinct()
+            ->pluck('type1');
 
-        $pokemons = Pokemon::orderBy('pokedex_number')
-            ->paginate($perPage)
-            ->withQueryString(); // garde les paramètres éventuels dans l'URL
+        $type2 = Pokemon::select('type2')
+            ->whereNotNull('type2')
+            ->distinct()
+            ->pluck('type2');
 
-        return view('home', [
-            'pokemons' => $pokemons,
-        ]);
+        return $type1->merge($type2)
+            ->unique()
+            ->sort()
+            ->values();
     }
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW : liste principale
+    |--------------------------------------------------------------------------
+    */
+    public function show(Request $request)
+    {
+        $pokemons = Pokemon::orderBy('pokedex_number')
+            ->paginate(40)
+            ->withQueryString();
+
+        $types = $this->getTypes();
+
+        return view('home', compact('pokemons', 'types'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEARCH : recherche par nom
+    |--------------------------------------------------------------------------
+    */
     public function search(Request $request)
     {
-        // 1) Valider l’entrée
         $data = $request->validate([
             'q' => ['nullable', 'string', 'max:100'],
         ]);
 
         $q = trim($data['q'] ?? '');
 
-        // 2) Construire la requête
         $query = Pokemon::query();
 
         if ($q !== '') {
-            // Recherche insensible à la casse selon la BDD (LIKE basique)
             $query->where('name', 'LIKE', '%' . $q . '%');
         }
 
-        // 3) Pagination fixe à 40 par page (même règle que show)
         $pokemons = $query->orderBy('pokedex_number')
             ->paginate(40)
-            ->withQueryString(); // garde ?q=... pendant la pagination
+            ->withQueryString();
 
-        // 4) Retourner la home qui inclura 'pokemon.show'
-        return view('home', [
-            'pokemons' => $pokemons,
-            'q' => $q, // utile si tu veux réafficher la valeur dans le champ
-        ]);
+        $types = $this->getTypes();
+
+        return view('home', compact('pokemons', 'types'));
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | FILTER : filtre combiné
+    |--------------------------------------------------------------------------
+    */
+    public function filter(Request $request)
+    {
+        $data = $request->validate([
+            'type'         => ['nullable', 'string'],
+            'generation'   => ['nullable', 'integer'],
+            'is_legendary' => ['nullable', 'in:0,1'],
+        ]);
 
+        $query = Pokemon::query();
+
+        if (!empty($data['type'])) {
+            $query->where(function ($q) use ($data) {
+                $q->where('type1', $data['type'])
+                  ->orWhere('type2', $data['type']);
+            });
+        }
+
+        if (!empty($data['generation'])) {
+            $query->where('generation', $data['generation']);
+        }
+
+        if ($request->filled('is_legendary')) {
+            $query->where('is_legendary', $data['is_legendary']);
+        }
+
+        $pokemons = $query->orderBy('pokedex_number')
+            ->paginate(40)
+            ->withQueryString();
+
+        $types = $this->getTypes();
+
+        return view('home', compact('pokemons', 'types'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL : fiche Pokémon
+    |--------------------------------------------------------------------------
+    */
     public function detail($id)
     {
-        return view('pokemon.detail', ['id' => $id]);
+        $pokemon = Pokemon::find($id);
+
+        if (!$pokemon) {
+            abort(404);
+        }
+
+        return view('pokemon.detail', compact('pokemon'));
     }
 
 
