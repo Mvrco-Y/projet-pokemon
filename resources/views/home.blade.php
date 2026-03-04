@@ -17,6 +17,9 @@
                        
 
                         <main>
+                            <a href="{{ route('decks.index') }}">Mes Decks</a> <br>
+                            <br>
+                            
                             <section class='filterpokemon'>
                                 @include('pokemon.search')
                             </section>
