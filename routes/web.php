@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PokemonController; // Pour faire fonctionner notre fonction index qui retourne notre page pokemonhome
-use App\Http\Controllers\DeckController; // Pour faire fonctionner notre fonction index qui retourne notre page decks.index
+use App\Http\Controllers\PokemonController; 
+use App\Http\Controllers\DeckController; 
+
 Route::get('/register', function () {
     return view('welcome');
 });
@@ -14,14 +15,25 @@ Auth::routes();
 Route::get('/', [PokemonController::class, 'index'])->name('homepokemon');
 
 //Route qui affiche notre page d'acceuil une fois connecté
-Route::get('/home', [PokemonController::class, 'show'])->name('pokemon.show');
+Route::get('/home', [PokemonController::class, 'show'])
+->middleware('auth')
+->name('pokemon.show');
 
-Route::get('/pokemons', [PokemonController::class, 'show'])->name('pokemon.show');    // liste (40/page)
-Route::get('/pokemons/search', [PokemonController::class, 'search'])->name('pokemon.search');
-Route::get('/pokemons/filter', [PokemonController::class, 'filter'])->name('pokemon.filter');
+Route::get('/pokemons', [PokemonController::class, 'show'])
+->middleware('auth')
+->name('pokemon.show');
+
+Route::get('/pokemons/search', [PokemonController::class, 'search'])
+->middleware('auth')
+->name('pokemon.search');
+
+Route::get('/pokemons/filter', [PokemonController::class, 'filter'])
+->middleware('auth')
+->name('pokemon.filter');
 
 
 Route::get('/pokemon/{id}', [PokemonController::class, 'detail'])->whereNumber('id')
+->middleware('auth')
 ->name('pokemon.detail'); 
 
 
@@ -54,6 +66,12 @@ Route::get('/decks/{deck}/edit', [DeckController::class, 'edit'])
     ->name('decks.edit');
 
 
+Route::put('/decks/{deck}', [DeckController::class, 'update'])
+    ->middleware('auth')
+    ->name('decks.update');
+
+
+
 // Enregistrer la modification (renommer)
 Route::put('/decks/{deck}', [DeckController::class, 'update'])
     ->middleware('auth')
@@ -63,3 +81,16 @@ Route::put('/decks/{deck}', [DeckController::class, 'update'])
 Route::delete('/decks/{deck}', [DeckController::class, 'destroy'])
     ->middleware('auth')
     ->name('decks.destroy');
+
+Route::get('/decks/{deck}/pokemons/add', [DeckController::class, 'addPokemonForm'])
+    ->middleware('auth')
+    ->name('decks.pokemons.add');
+
+    
+Route::post('/decks/{deck}/pokemons', [DeckController::class, 'addPokemon'])
+    ->middleware('auth')
+    ->name('decks.pokemons.store');
+
+Route::delete('/decks/{deck}/pokemons/{pokemon}', [\App\Http\Controllers\DeckController::class, 'removePokemon'])
+    ->middleware('auth')
+    ->name('decks.pokemons.destroy');

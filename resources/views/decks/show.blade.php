@@ -36,16 +36,22 @@
     <div class="mb-3 d-flex align-items-center justify-content-between">
         <h2 class="h5 mb-0">Pokémon du deck ({{ $totalDistinct }}/5 distincts)</h2>
 
-        {{-- Pour l’instant, on met juste un bouton qui pointera vers le futur formulaire --}}
-        <button
+        {{-- Lien vers le formulaire d’ajout --}}
+        @if($limitReached)
+            <a href="{{ route('decks.pokemons.add', $deck->id) }}"
+            class="btn btn-primary disabled"
+            aria-disabled="true"
+            onclick="return false;"
+            title="Limite : 5 Pokémon déjà atteinte">
+                Ajouter un Pokémon
+            </a>
+        @else
+            <a href="{{ route('decks.pokemons.add', $deck->id) }}"
             class="btn btn-primary"
-            type="button"
-            @if($limitReached) disabled @endif
-            onclick="document.getElementById('add-pokemon-placeholder').scrollIntoView({ behavior: 'smooth' });"
-            title="{{ $limitReached ? 'Limite: 5 Pokémon déjà atteinte' : 'Ajouter un Pokémon' }}"
-        >
-            Ajouter un Pokémon
-        </button>
+            title="Ajouter un Pokémon">
+                Ajouter un Pokémon
+            </a>
+        @endif
     </div>
 
     @if($deck->pokemons->count() === 0)
@@ -67,7 +73,7 @@
                             <td>{{ $p->pokedex_number }}</td>
                             <td>
                                 {{-- Lien vers la fiche détail du pokémon --}}
-                                <a href="{{ route('pokemons.detail', $p->id) }}">
+                                <a href="{{ route('pokemon.detail', $p->id) }}">
                                     {{ $p->name }}
                                 </a>
                             </td>
