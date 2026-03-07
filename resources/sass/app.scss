@@ -52,3 +52,120 @@
     box-shadow: 0 0 15px rgba(255, 68, 68, 0.67);
     color: #FFD700;
 }
+
+// Pokemon Cards Grid
+.pokemon-card-link {
+    text-decoration: none;
+}
+
+.poke-card {
+    position: relative;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    padding: 8px;
+}
+
+.poke-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px #FFD70088;
+}
+
+.poke-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.poke-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 10px;
+}
+
+.poke-overlay span {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.55rem;
+    color: #FFD700;
+    text-align: center;
+    padding: 0 8px;
+}
+
+.poke-card:hover .poke-overlay {
+    opacity: 1;
+}
+
+.poke-info { padding: 4px 0; }
+
+.poke-number {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.55rem;
+    color: #aaa;
+    margin-bottom: 2px;
+}
+
+.poke-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+}
+
+.poke-gen {
+    color: #aaa;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+// Fix pagination SVG arrows
+.pagination svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.pagination .page-item .page-link {
+    background-color: #1a1a2e;
+    border: 1px solid #FFD70066;
+    color: #FFD700;
+    font-weight: 700;
+    border-radius: 6px !important;
+    padding: 6px 12px;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #FFD700;
+    color: #000;
+    border-color: #FFD700;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #cc0000;
+    border-color: #cc0000;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #0d0d1f;
+    border-color: #333;
+    color: #555;
+}
+
+
