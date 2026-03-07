@@ -6,3 +6,49 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Pokemon Theme
+.pokemon-form-card {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 2px solid #FFD700;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.27);
+}
+
+.pokemon-label {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.pokemon-form-card .form-control {
+    background-color: #0d0d1f;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #fff;
+    border-radius: 8px;
+}
+
+.pokemon-form-card .form-control:focus {
+    background-color: #0d0d1f;
+    border-color: #FFD700;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.53);
+}
+
+.pokemon-btn {
+    background: linear-gradient(90deg, #cc0000, #ff4444);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.75rem;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pokemon-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.67);
+    color: #FFD700;
+}
