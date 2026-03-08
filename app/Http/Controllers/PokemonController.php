@@ -76,7 +76,7 @@ class PokemonController extends Controller
         }
 
         $pokemons = $query->orderBy('pokedex_number')
-            ->paginate(40)
+            ->paginate(36)
             ->withQueryString();
 
         $types = $this->getTypes();
@@ -115,7 +115,7 @@ class PokemonController extends Controller
         }
 
         $pokemons = $query->orderBy('pokedex_number')
-            ->paginate(40)
+            ->paginate(36)
             ->withQueryString();
 
         $types = $this->getTypes();
