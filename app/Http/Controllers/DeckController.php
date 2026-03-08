@@ -66,7 +66,7 @@ class DeckController extends Controller
 
         // Charger les pokémon du deck (avec la quantité depuis la pivot)
         $deck->load(['pokemons' => function ($q) {
-            $q->select('pokemon.id', 'name', 'pokedex_number', 'type1', 'type2')
+            $q->select('pokemon.id', 'name', 'pokedex_number', 'type1', 'type2', 'image_path')
             ->orderBy('pokedex_number');
         }]);
 

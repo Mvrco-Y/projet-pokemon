@@ -1,0 +1,110 @@
+// Add Pokemon Card
+.add-poke-card {
+    position: relative;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 2px solid #FFD700;
+    border-radius: 14px;
+    text-align: center;
+    padding: 12px 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-poke-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px #FFD70066;
+}
+
+.add-poke-card.already-in {
+    border-color: #78C850;
+    opacity: 0.7;
+}
+
+.add-poke-card.limit-reached {
+    border-color: #555;
+    opacity: 0.5;
+}
+
+// Overlay hover
+.add-poke-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 12px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.55rem;
+    color: #FFD700;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    z-index: 2;
+}
+
+.add-poke-card:hover .add-poke-overlay {
+    opacity: 1;
+}
+
+.already-overlay { color: #78C850; cursor: default; }
+.limit-overlay   { color: #ff5959; cursor: default; }
+
+// Bouton détail
+.add-poke-detail {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid #FFD70066;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    text-decoration: none;
+    z-index: 3;
+    transition: background 0.2s;
+}
+
+.add-poke-detail:hover {
+    background: #FFD700;
+}
+
+// Image
+.add-poke-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px #FFD70044);
+    transition: transform 0.3s;
+}
+
+.add-poke-card:hover .add-poke-img {
+    transform: scale(1.1);
+}
+
+.add-poke-number {
+    font-family: 'Press Start 2P', cursive;
+    color: #aaa;
+    font-size: 0.45rem;
+    margin-bottom: 2px;
+    margin-top: 6px;
+}
+
+.add-poke-name {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+}

@@ -1,116 +1,107 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
 
-    {{-- Message flash --}}
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
+    @if(session('status'))
+        <div class="alert" style="background:#1a3a1a; border:1px solid #78C850; color:#78C850; border-radius:8px;">
             {{ session('status') }}
         </div>
     @endif
 
-    <h1 class="mb-2">Deck : {{ $deck->name }}</h1>
-    @if($deck->description)
-        <p class="text-muted">{{ $deck->description }}</p>
-    @endif
-
-    {{-- Actions haut de page --}}
-    <div class="d-flex gap-2 mb-4">
-        <a href="{{ route('decks.index') }}" class="btn btn-light">← Retour à mes decks</a>
-        <a href="{{ route('decks.edit', $deck->id) }}" class="btn btn-secondary">Renommer</a>
-        <form action="{{ route('decks.destroy', $deck->id) }}" method="POST" onsubmit="return confirm('Supprimer ce deck ?');">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger">Supprimer le deck</button>
-        </form>
+    {{-- Header --}}
+    <div class="deck-show-header mb-4">
+        <div>
+            <h1 class="deck-show-title">{{ $deck->name }}</h1>
+            @if($deck->description)
+                <p class="deck-show-desc">{{ $deck->description }}</p>
+            @endif
+        </div>
+        <div class="deck-show-actions">
+            <a href="{{ route('decks.index') }}" class="btn pokemon-cancel-btn px-3 py-2">← Retour</a>
+            <form action="{{ route('decks.destroy', $deck->id) }}" method="POST"
+                  onsubmit="return confirm('Supprimer ce deck ?');" style="display:inline-block;">
+                @csrf
+                @method('DELETE')
+                <button class="btn pokemon-delete-btn px-3 py-2">🗑️ Supprimer</button>
+            </form>
+        </div>
     </div>
 
-    {{-- Bouton Ajouter un Pokémon (le formulaire viendra plus tard) --}}
+    {{-- Barre de progression --}}
     @php
-        $totalInDeck = $deck->pokemons->sum('pivot.quantity'); // total cartes (si un jour on gère des quantités)
-        $totalDistinct = $deck->pokemons->count();            // nombre d'entrées distinctes
-        $limitReached = $totalDistinct >= 5;                  // contrainte business : max 5 pokémon distincts
+        $totalDistinct = $deck->pokemons->count();
+        $limitReached  = $totalDistinct >= 5;
+        $percent       = ($totalDistinct / 5) * 100;
     @endphp
 
-    <div class="mb-3 d-flex align-items-center justify-content-between">
-        <h2 class="h5 mb-0">Pokémon du deck ({{ $totalDistinct }}/5 distincts)</h2>
+    <div class="deck-progress-section mb-4">
+        <div class="d-flex justify-content-between mb-1">
+            <span class="deck-progress-label">Pokémon dans le deck</span>
+            <span class="deck-progress-count">{{ $totalDistinct }} / 5</span>
+        </div>
+        <div class="pokemon-stat-bar-bg">
+            <div class="pokemon-stat-bar"
+                 style="width: {{ $percent }}%; background: linear-gradient(90deg, #cc0000, #FFD700);"></div>
+        </div>
+    </div>
 
-        {{-- Lien vers le formulaire d’ajout --}}
+    {{-- Bouton ajouter --}}
+    <div class="mb-4">
         @if($limitReached)
-            <a href="{{ route('decks.pokemons.add', $deck->id) }}"
-            class="btn btn-primary disabled"
-            aria-disabled="true"
-            onclick="return false;"
-            title="Limite : 5 Pokémon déjà atteinte">
-                Ajouter un Pokémon
-            </a>
+            <button class="btn pokemon-decks-btn disabled" disabled>
+                🚫 Limite atteinte (5/5)
+            </button>
         @else
-            <a href="{{ route('decks.pokemons.add', $deck->id) }}"
-            class="btn btn-primary"
-            title="Ajouter un Pokémon">
-                Ajouter un Pokémon
+            <a href="{{ route('decks.pokemons.add', $deck->id) }}" class="btn pokemon-decks-btn">
+                ➕ Ajouter un Pokémon
             </a>
         @endif
     </div>
 
+    {{-- Grille Pokémon --}}
     @if($deck->pokemons->count() === 0)
-        <p class="text-muted">Aucun Pokémon pour l’instant. Clique sur “Ajouter un Pokémon”.</p>
+        <div class="deck-empty">
+            <p>Aucun Pokémon dans ce deck.</p>
+            <p style="font-size:0.75rem; color:#555;">Commence par ajouter un Pokémon !</p>
+        </div>
     @else
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Types</th>
-                        <th class="text-end" style="width: 160px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($deck->pokemons as $p)
-                        <tr>
-                            <td>{{ $p->pokedex_number }}</td>
-                            <td>
-                                {{-- Lien vers la fiche détail du pokémon --}}
-                                <a href="{{ route('pokemon.detail', $p->id) }}">
-                                    {{ $p->name }}
-                                </a>
-                            </td>
-                            <td>{{ $p->type1 }}{{ $p->type2 ? ' / '.$p->type2 : '' }}</td>
-                            <td class="text-end">
-                                {{-- Supprimer ce Pokémon du deck --}}
-                                <form
-                                    action="{{ route('decks.pokemons.destroy', [$deck->id, $p->id]) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('Retirer {{ $p->name }} du deck ?');"
-                                    class="d-inline-block"
-                                >
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                                        Retirer
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="text-end">Total distincts :</th>
-                        <th class="text-end">{{ $totalDistinct }}</th>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="row g-4 justify-content-center">
+    @foreach($deck->pokemons as $index => $p)
+        <div class="{{ $index === 0 ? 'col-12 col-md-8' : 'col-12 col-md-6' }}">
+                    <div class="deck-poke-card">
+
+                        {{-- Bouton retirer --}}
+                        <form action="{{ route('decks.pokemons.destroy', [$deck->id, $p->id]) }}"
+                              method="POST"
+                              onsubmit="return confirm('Retirer {{ $p->name }} du deck ?');"
+                              class="deck-remove-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="deck-remove-btn" title="Retirer">✕</button>
+                        </form>
+
+                        {{-- Lien vers la fiche --}}
+                        <a href="{{ route('pokemon.detail', $p->id) }}" class="deck-poke-link">
+                            <div class="deck-poke-overlay">
+                                <span>Voir la fiche</span>
+                            </div>
+                            <img src="{{ asset($p->image_path) }}" alt="{{ $p->name }}" class="deck-poke-img">
+                            <p class="deck-poke-number">#{{ $p->pokedex_number }}</p>
+                            <p class="deck-poke-name">{{ $p->name }}</p>
+                            <div>
+                                <span class="badge type-badge type-{{ strtolower($p->type1) }}">{{ $p->type1 }}</span>
+                                @if($p->type2)
+                                    <span class="badge type-badge type-{{ strtolower($p->type2) }}">{{ $p->type2 }}</span>
+                                @endif
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            @endforeach
         </div>
     @endif
 
-    {{-- Placeholder du futur formulaire d’ajout --}}
-    <div id="add-pokemon-placeholder" class="mt-5">
-        <div class="alert alert-info mb-0">
-            Le formulaire d’ajout de Pokémon sera ajouté ici à l’étape suivante.
-        </div>
-    </div>
 </div>
 @endsection

@@ -7,6 +7,13 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+
+// Styles deck
+@import 'components/deck-show';
+
+//Styes ajout pok
+@import 'components/deck-add';
+
 // Pokemon Theme
 .pokemon-form-card {
     background: linear-gradient(145deg, #1a1a2e, #16213e);
@@ -325,5 +332,121 @@
     height: 100%;
     border-radius: 10px;
     transition: width 1s ease;
+}
+
+// Deck Cards
+.deck-card-link {
+    text-decoration: none;
+}
+
+.deck-card {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 2px solid #FFD700;
+    border-radius: 16px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    min-height: 160px;
+}
+
+.deck-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px #FFD70066;
+}
+
+.deck-pokemon-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(90deg, #cc0000, #ff4444);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.45rem;
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.deck-name {
+    font-family: 'Press Start 2P', cursive;
+    color: #FFD700;
+    font-size: 0.75rem;
+    margin-bottom: 0;
+    padding-right: 90px;
+}
+
+.deck-pokeballs {
+    color: #FFD70066;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+}
+
+.pokemon-cancel-btn {
+    background: #333;
+    color: #aaa;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.pokemon-cancel-btn:hover {
+    background: #555;
+    color: #fff;
+}
+
+.pokemon-delete-btn {
+    background: linear-gradient(90deg, #8b0000, #cc0000);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pokemon-delete-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #cc0000aa;
+    color: #FFD700;
+}
+
+// Deck previews
+.deck-previews {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 60px;
+}
+
+.deck-preview-img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px #FFD70044);
+    transition: transform 0.2s;
+}
+
+.deck-card:hover .deck-preview-img {
+    transform: translateY(-4px);
+}
+
+// Textarea
+.pokemon-form-card textarea.form-control {
+    background-color: #0d0d1f;
+    border: 1px solid #FFD70066;
+    color: #fff;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.pokemon-form-card textarea.form-control:focus {
+    background-color: #0d0d1f;
+    border-color: #FFD700;
+    color: #fff;
+    box-shadow: 0 0 8px #FFD70044;
+}
+
+.pokemon-form-card textarea.form-control::placeholder {
+    color: #555;
 }
 
