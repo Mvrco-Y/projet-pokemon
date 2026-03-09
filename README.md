@@ -1,59 +1,297 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎮 Pokémon Deck Builder
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Application web de gestion de decks Pokémon, réalisée avec Laravel 12.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📸 Aperçu
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Page d'accueil
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+![Accueil](public/screenshots/accueil.png)
 
-## Learning Laravel
+### Pokédex (connecté)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+![Home](https://claude.ai/chat/public/screenshots/home.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Fiche Pokémon
 
-## Laravel Sponsors
+![Détail](https://claude.ai/chat/public/screenshots/detail.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Mes Decks
 
-### Premium Partners
+![Decks](https://claude.ai/chat/public/screenshots/decks.png)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Contenu d'un Deck
 
-## Contributing
+![Deck Show](https://claude.ai/chat/public/screenshots/deck-show.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Ajouter un Pokémon
 
-## Code of Conduct
+![Add Pokemon](https://claude.ai/chat/public/screenshots/add-pokemon.png)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Connexion
 
-## Security Vulnerabilities
+![Login](https://claude.ai/chat/public/screenshots/login.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🎯 Objectifs du projet
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Développer une application permettant de :
+
+- Lister et explorer tous les Pokémon du Pokédex
+- Filtrer les Pokémon par type, génération et statut légendaire
+- Consulter la fiche détaillée d'un Pokémon (stats, types, génération)
+- Créer et gérer plusieurs decks de Pokémon
+- Ajouter, modifier et supprimer des Pokémon dans un deck
+- Sécuriser les decks par utilisateur (chaque deck est privé)
+
+---
+
+## ⚙️ Stack technique
+
+Technologie
+
+Version
+
+PHP
+
+8.4.0
+
+Laravel
+
+12.49.0
+
+Node.js
+
+20.19.5
+
+Bootstrap
+
+5.3
+
+Base de données
+
+SQLite
+
+Build tool
+
+Vite
+
+---
+
+## 🚀 Installation
+
+### 1. Cloner le projet
+
+```bash
+git clone <url-du-repo>
+cd projet-pokemon
+
+```
+
+### 2. Installer les dépendances PHP
+
+```bash
+composer install
+
+```
+
+### 3. Installer les dépendances JS
+
+```bash
+npm install
+
+```
+
+### 4. Configurer l'environnement
+
+```bash
+cp .env.example .env
+php artisan key:generate
+
+```
+
+> `cp .env.example .env` copie le fichier de configuration modèle pour créer ton propre `.env`. Le fichier `.env.example` est déjà configuré avec SQLite, aucune modification nécessaire.
+>
+> `php artisan key:generate` génère une clé secrète unique utilisée par Laravel pour chiffrer les sessions et les cookies.
+
+### 5. Créer la base de données SQLite
+
+```bash
+touch database/database.sqlite
+
+```
+
+> ⚠️ Le fichier `database.sqlite` n'est jamais versionné sur Git. Il faut le créer manuellement à chaque fois que tu clones le projet.
+
+### 6. Lancer les migrations et les seeders
+
+```bash
+php artisan migrate:fresh --seed
+
+```
+
+Cette commande va :
+
+- Créer toutes les tables
+- Créer un utilisateur de test
+- Importer tous les Pokémon depuis `database/seeders/data/pokemon.json`
+
+### 7. Compiler les assets
+
+```bash
+npm run dev
+
+```
+
+### 8. Lancer le serveur
+
+```bash
+php artisan serve
+
+```
+
+L'application est accessible sur `http://localhost:8000`
+
+---
+
+## 👤 Compte de test
+
+Champ
+
+Valeur
+
+Email
+
+test@example.com
+
+Mot de passe
+
+password
+
+---
+
+## 📁 Structure des vues
+
+```
+resources/views/
+├── auth/
+│   ├── login.blade.php          # Connexion
+│   ├── register.blade.php       # Inscription
+│   ├── verify.blade.php         # Vérification email
+│   └── passwords/
+│       ├── email.blade.php      # Mot de passe oublié
+│       └── reset.blade.php      # Réinitialisation
+├── decks/
+│   ├── index.blade.php          # Liste des decks
+│   ├── create.blade.php         # Créer un deck
+│   ├── show.blade.php           # Détail d'un deck
+│   ├── edit.blade.php           # Modifier un deck
+│   └── pokemons/
+│       └── add.blade.php        # Ajouter un Pokémon au deck
+├── pokemon/
+│   ├── show.blade.php           # Grille Pokémon (home)
+│   ├── detail.blade.php         # Fiche détail d'un Pokémon
+│   ├── search.blade.php         # Barre de recherche
+│   └── filter.blade.php         # Formulaire de filtres
+├── layouts/
+│   └── app.blade.php            # Layout principal
+├── home.blade.php               # Page home connectée
+├── homepokemons.blade.php       # Page d'accueil publique
+└── welcome.blade.php            # Layout d'accueil
+
+```
+
+---
+
+## 🗂️ Fonctionnalités
+
+### 🔓 Accès public
+
+- Voir le carousel de tous les Pokémon sur la page d'accueil
+- Créer un compte / Se connecter
+
+### 🔐 Accès connecté
+
+- Explorer le Pokédex complet en grille
+- Rechercher un Pokémon par nom
+- Filtrer par type, génération et statut légendaire
+- Voir la fiche détaillée d'un Pokémon (stats avec barres de progression)
+- Créer, renommer et supprimer des decks
+- Ajouter jusqu'à **5 Pokémon distincts** par deck
+- Retirer un Pokémon d'un deck
+- Voir la composition de ses decks (privé par utilisateur)
+
+---
+
+## 🎨 Design
+
+L'interface adopte un thème **gaming Pokémon** avec :
+
+- Police **Press Start 2P** pour les titres et éléments clés
+- Police **Rajdhani** pour le texte courant
+- Palette de couleurs : rouge Pokédex, jaune or, fond sombre
+- Fond animé avec étoiles scintillantes (canvas JS)
+- Cartes Pokémon avec effets hover et animations flottantes
+- Badges de types colorés par catégorie (feu, eau, plante...)
+- Barres de stats colorées par statistique
+
+---
+
+## 📊 Base de données
+
+Les Pokémon sont alimentés via des **seeders** à partir d'un fichier JSON (`database/seeders/data/pokemon.json`) issu de données Kaggle, contenant :
+
+- Numéro Pokédex, nom, types
+- Statistiques (HP, Attaque, Défense, Sp. Attaque, Sp. Défense, Vitesse)
+- Génération, statut légendaire, chemin de l'image
+
+---
+
+## 🔒 Sécurité
+
+- Authentification via Laravel Auth
+- Chaque deck est lié à un utilisateur (`user_id`)
+- Vérification `abort_if` sur chaque action de deck pour s'assurer que l'utilisateur est bien le propriétaire
+
+---
+
+## ⚠️ Points importants après clonage
+
+Fichier
+
+Statut
+
+Action requise
+
+`.env`
+
+Non versionné
+
+`cp .env.example .env`
+
+`database/database.sqlite`
+
+Non versionné
+
+`touch database/database.sqlite`
+
+`APP_KEY`
+
+Non versionné
+
+`php artisan key:generate`
+
+`public/build`
+
+Non versionné
+
+`npm install && npm run dev`
+
+---
+
+## 👤 Auteur
+
+Projet réalisé dans le cadre du cours Laravel — MyDigitalSchool 2025/2026.
