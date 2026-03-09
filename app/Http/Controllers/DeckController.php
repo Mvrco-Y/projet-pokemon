@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use App\Models\Deck; 
+use App\Models\Deck;
 use App\Models\Pokemon;
 
 class DeckController extends Controller
 {
-    
+
     public function index()
     {
         return view('decks.index');
     }
 
-   public function deck(Request $request)
+    public function deck(Request $request)
     {
         // Nombre d’éléments par page (1 à 50)
         $perPage = (int) $request->input('per_page', 10);
@@ -32,7 +33,7 @@ class DeckController extends Controller
         ]);
     }
 
-    
+
     public function create()
     {
         return view('decks.create');
@@ -62,12 +63,12 @@ class DeckController extends Controller
     public function show(Deck $deck)
     {
         // Sécurité : l'utilisateur ne peut voir que ses propres decks
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         // Charger les pokémon du deck (avec la quantité depuis la pivot)
         $deck->load(['pokemons' => function ($q) {
             $q->select('pokemon.id', 'name', 'pokedex_number', 'type1', 'type2', 'image_path')
-            ->orderBy('pokedex_number');
+                ->orderBy('pokedex_number');
         }]);
 
         return view('decks.show', compact('deck'));
@@ -76,7 +77,7 @@ class DeckController extends Controller
     public function edit(Deck $deck)
     {
         // Sécurité
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         return view('decks.edit', compact('deck'));
     }
@@ -86,7 +87,7 @@ class DeckController extends Controller
     public function destroy(Deck $deck)
     {
         // Sécurité
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         $deck->delete();
 
@@ -98,7 +99,7 @@ class DeckController extends Controller
 
     public function addPokemonForm(\App\Models\Deck $deck, Request $request)
     {
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         // 1) Lire les inputs (sans forcer la validation compliquée pour l’instant)
         $q            = trim((string) $request->input('q', ''));
@@ -152,7 +153,7 @@ class DeckController extends Controller
     public function addPokemon(\Illuminate\Http\Request $request, \App\Models\Deck $deck)
     {
         // Sécurité : seul le propriétaire peut modifier son deck
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         // Validation basique : l'ID doit exister dans la table 'pokemon'
         $data = $request->validate([
@@ -165,7 +166,7 @@ class DeckController extends Controller
         $alreadyInDeck = $deck->pokemons()->where('pokemon.id', $pokemonId)->exists();
         if ($alreadyInDeck) {
             return back()->with('error', 'Ce Pokémon est déjà dans le deck.')
-                        ->withInput();
+                ->withInput();
         }
 
         // Règle métier : max 5 Pokémon distincts
@@ -186,7 +187,7 @@ class DeckController extends Controller
     public function removePokemon(\App\Models\Deck $deck, \App\Models\Pokemon $pokemon)
     {
         // Sécurité : seul le propriétaire peut modifier son deck
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         // Détacher le Pokémon (si non présent, detach ne casse pas)
         $deck->pokemons()->detach($pokemon->id);
@@ -198,7 +199,7 @@ class DeckController extends Controller
 
     public function update(Request $request, Deck $deck)
     {
-        abort_if($deck->user_id !== auth()->id(), 403);
+        abort_if($deck->user_id !== auth()->id(), Response::HTTP_FORBIDDEN);
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers; 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Pokemon; //import du modèle
 
 class PokemonController extends Controller
 {
     //Fonction qui retournera notre vue pokemon(liste de tous les pokemons)
-    public function index(Request $request)    
+    public function index(Request $request)
     {
         $perPage = (int) $request->input('per_page', 24);
         $perPage = max(1, min($perPage, 100)); // sécurité : 1..100
@@ -21,8 +23,8 @@ class PokemonController extends Controller
         ]);
     }
 
-    
-   private function getTypes()
+
+    private function getTypes()
     {
         $type1 = Pokemon::select('type1')
             ->whereNotNull('type1')
@@ -90,7 +92,7 @@ class PokemonController extends Controller
         if (!empty($data['type'])) {
             $query->where(function ($q) use ($data) {
                 $q->where('type1', $data['type'])
-                  ->orWhere('type2', $data['type']);
+                    ->orWhere('type2', $data['type']);
             });
         }
 
@@ -111,17 +113,15 @@ class PokemonController extends Controller
         return view('home', compact('pokemons', 'types'));
     }
 
-  
+
     public function detail($id)
     {
         $pokemon = Pokemon::find($id);
 
         if (!$pokemon) {
-            abort(404);
+            abort(Response::HTTP_NOT_FOUND);
         }
 
         return view('pokemon.detail', compact('pokemon'));
     }
-
-
 }
