@@ -40,11 +40,7 @@ class PokemonController extends Controller
             ->values();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SHOW : liste principale
-    |--------------------------------------------------------------------------
-    */
+
     public function show(Request $request)
     {
         $pokemons = Pokemon::orderBy('pokedex_number')
@@ -56,11 +52,7 @@ class PokemonController extends Controller
         return view('home', compact('pokemons', 'types'));
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SEARCH : recherche par nom
-    |--------------------------------------------------------------------------
-    */
+
     public function search(Request $request)
     {
         $data = $request->validate([
@@ -84,11 +76,7 @@ class PokemonController extends Controller
         return view('home', compact('pokemons', 'types'));
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FILTER : filtre combiné
-    |--------------------------------------------------------------------------
-    */
+
     public function filter(Request $request)
     {
         $data = $request->validate([
@@ -123,11 +111,7 @@ class PokemonController extends Controller
         return view('home', compact('pokemons', 'types'));
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DETAIL : fiche Pokémon
-    |--------------------------------------------------------------------------
-    */
+  
     public function detail($id)
     {
         $pokemon = Pokemon::find($id);
