@@ -53,31 +53,21 @@ Développer une application permettant de :
 
 Technologie
 
-Version
+- PHP: 8.4.0
 
-PHP
+- Laravel: 12.49.0
 
-8.4.0
+- Node.js: 20.19.5
 
-Laravel
-
-12.49.0
-
-Node.js
-
-20.19.5
-
-Bootstrap
-
-5.3
+- Bootstrap: 5.3
 
 Base de données
 
-SQLite
+- SQLite
 
-Build tool
+- Build tool
 
-Vite
+- Vite
 
 ---
 
@@ -159,17 +149,9 @@ L'application est accessible sur `http://localhost:8000`
 
 ## 👤 Compte de test
 
-Champ
+- Email: test@example.com
 
-Valeur
-
-Email
-
-test@example.com
-
-Mot de passe
-
-password
+- Mot de passe: password
 
 ---
 
@@ -226,20 +208,6 @@ resources/views/
 
 ---
 
-## 🎨 Design
-
-L'interface adopte un thème **gaming Pokémon** avec :
-
-- Police **Press Start 2P** pour les titres et éléments clés
-- Police **Rajdhani** pour le texte courant
-- Palette de couleurs : rouge Pokédex, jaune or, fond sombre
-- Fond animé avec étoiles scintillantes (canvas JS)
-- Cartes Pokémon avec effets hover et animations flottantes
-- Badges de types colorés par catégorie (feu, eau, plante...)
-- Barres de stats colorées par statistique
-
----
-
 ## 📊 Base de données
 
 Les Pokémon sont alimentés via des **seeders** à partir d'un fichier JSON (`database/seeders/data/pokemon.json`) issu de données Kaggle, contenant :
@@ -249,49 +217,3 @@ Les Pokémon sont alimentés via des **seeders** à partir d'un fichier JSON (`d
 - Génération, statut légendaire, chemin de l'image
 
 ---
-
-## 🔒 Sécurité
-
-- Authentification via Laravel Auth
-- Chaque deck est lié à un utilisateur (`user_id`)
-- Vérification `abort_if` sur chaque action de deck pour s'assurer que l'utilisateur est bien le propriétaire
-
----
-
-## ⚠️ Points importants après clonage
-
-Fichier
-
-Statut
-
-Action requise
-
-`.env`
-
-Non versionné
-
-`cp .env.example .env`
-
-`database/database.sqlite`
-
-Non versionné
-
-`touch database/database.sqlite`
-
-`APP_KEY`
-
-Non versionné
-
-`php artisan key:generate`
-
-`public/build`
-
-Non versionné
-
-`npm install && npm run dev`
-
----
-
-## 👤 Auteur
-
-Projet réalisé dans le cadre du cours Laravel — MyDigitalSchool 2025/2026.
