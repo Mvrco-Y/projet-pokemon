@@ -12,27 +12,27 @@
 
 ### Pokédex (connecté)
 
-![Home](https://claude.ai/chat/public/screenshots/home.png)
+![Home](public/screenshots/home.png)
 
 ### Fiche Pokémon
 
-![Détail](https://claude.ai/chat/public/screenshots/detail.png)
+![Détail](public/screenshots/detail.png)
 
 ### Mes Decks
 
-![Decks](https://claude.ai/chat/public/screenshots/decks.png)
+![Decks](public/screenshots/decks.png)
 
 ### Contenu d'un Deck
 
-![Deck Show](https://claude.ai/chat/public/screenshots/deck-show.png)
+![Deck Show](public/screenshots/deck-show.png)
 
 ### Ajouter un Pokémon
 
-![Add Pokemon](https://claude.ai/chat/public/screenshots/add-pokemon.png)
+![Add Pokemon](public/screenshots/add-pokemon.png)
 
 ### Connexion
 
-![Login](https://claude.ai/chat/public/screenshots/login.png)
+![Login](public/screenshots/login.png)
 
 ---
 
